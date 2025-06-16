@@ -82,7 +82,23 @@ nvidia-smi
 
 ## Virtual Environment Setup
 
-### Python Virtual Environment
+### Conda Environment (Recommended)
+```bash
+# Create conda environment with Python 3.10
+conda create -n ai_video_env python=3.10 -y
+
+# Activate environment
+conda activate ai_video_env
+
+# Install FFmpeg via conda
+conda install ffmpeg -c conda-forge -y
+
+# Verify activation
+python --version  # Should show Python 3.10.x
+ffmpeg -version   # Should show FFmpeg version
+```
+
+### Python Virtual Environment (Alternative)
 ```bash
 # Create virtual environment
 python -m venv ai_video_env
