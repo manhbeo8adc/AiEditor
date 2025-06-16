@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  min-height: 100vh;
+}
+
+.status-section, .upload-section, .processing-section {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #61dafb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.status-message {
+  margin-top: 10px;
+  font-weight: bold;
+} 
