@@ -25,8 +25,14 @@ from video_processor import VideoProcessor
 try:
     import magic
     MAGIC_AVAILABLE = True
+    print("✅ python-magic loaded successfully")
 except ImportError:
     print("⚠️  python-magic not available, using fallback file validation")
+    print("   Tip: conda activate ai_video_env && pip install python-magic")
+    MAGIC_AVAILABLE = False
+except Exception as e:
+    print(f"⚠️  python-magic import error: {e}")
+    print("   Using fallback file validation")
     MAGIC_AVAILABLE = False
 
 # Initialize Flask application
