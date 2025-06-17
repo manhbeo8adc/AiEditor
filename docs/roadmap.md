@@ -78,12 +78,12 @@
 - Documentation
 - Build & deployment setup
 
-## 🎯 QUICK NAVIGATION
-- [**BƯỚC 1: PROJECT SETUP**](#bước-1-project-setup) ← AI tự làm (30 phút)
-- [**BƯỚC 2: VIDEO PROCESSING**](#bước-2-video-processing) ← AI tự làm (60 phút)  
-- [**BƯỚC 3: WAN2GP INTEGRATION**](#bước-3-wan2gp-integration) ← Human làm (40 phút)
-- [**BƯỚC 4: FRONTEND**](#bước-4-frontend) ← AI tự làm (80 phút)
-- [**BƯỚC 5: TESTING**](#bước-5-testing) ← Human làm (60 phút)
+## 🎯 QUICK NAVIGATION & STATUS
+- [**BƯỚC 1: PROJECT SETUP**](#bước-1-project-setup) ← ✅ **COMPLETED** (AI tự làm - 30 phút)
+- [**BƯỚC 2: VIDEO PROCESSING**](#bước-2-video-processing) ← ✅ **COMPLETED** (AI tự làm - 60 phút)  
+- [**BƯỚC 3: WAN2GP INTEGRATION**](#bước-3-wan2gp-integration) ← 🔄 **NEXT** (Human làm - 40 phút)
+- [**BƯỚC 4: FRONTEND**](#bước-4-frontend) ← ⏳ **PENDING** (AI tự làm - 80 phút)
+- [**BƯỚC 5: TESTING**](#bước-5-testing) ← ⏳ **PENDING** (Human làm - 60 phút)
 
 ## 🚀 BƯỚC 1: PROJECT SETUP (AI tự làm - 30 phút)
 
@@ -189,67 +189,61 @@ Implement endpoints:
 Mỗi endpoint return success message, chưa implement logic.
 ```
 
-### 2.2 Secure File Upload (AI - 20 phút)
-**📖 AI đọc TRỰC TIẾP:**
+### 2.2 ✅ Secure File Upload (COMPLETED)
+**📖 AI đã đọc và implement:**
 ```
 docs/security-validation.md#file-type-validation (dòng 6-33)
 docs/security-validation.md#path-traversal-prevention (dòng 35-58)
 docs/security-validation.md#input-sanitization (dòng 60-78)
 ```
 
-**AI Prompt:**
+**📁 Files Created:**
+- `backend/app.py` - Flask app với security features
+- `tests/test_rate_limiting.py` - Test rate limiting (Step 2.2)
+- `tests/test_cors.py` - Test CORS configuration (Step 2.3)
+- `requirements.txt` - Updated (PyTorch dependencies removed)
+
+### 2.3 ✅ Testing Infrastructure (COMPLETED)
+**📖 AI đã tạo testing guides:**
 ```
-Copy functions từ 3 sections docs trên:
-
-1. validate_video_file() - copy từ File Type Validation
-2. secure_file_path() - copy từ Path Traversal Prevention  
-3. sanitize_user_input() - copy từ Input Sanitization
-
-Implement POST /api/upload endpoint:
-- Use validate_video_file() cho both uploaded files
-- Use secure_file_path() để save files
-- Extract metadata bằng OpenCV
-- Return JSON với file paths và metadata
-- Use SafeErrorHandler cho errors
+docs/testing/step2-testing-guide.md - Comprehensive testing guide
+tests/README.md - Test scripts documentation  
+README.md - Updated với PyTorch installation per GPU type
 ```
 
-### 2.3 Video Processing Functions (AI - 20 phút)
-**📖 AI đọc TRỰC TIẾP:**
-```
-docs/security-validation.md#command-injection-prevention (dòng 164-199)
-docs/troubleshooting.md#audio-sync-issues (dòng 85-99)
-```
-
-**AI Prompt:**
-```
-Copy functions từ 2 sections docs trên:
-
-1. safe_ffmpeg_command() - copy từ Command Injection Prevention
-2. execute_safe_command() - copy từ same section
-3. Audio sync solution - copy từ Audio Sync Issues
-
-Implement VideoProcessor class:
-- extract_frames(video1_path, video2_path): extract last frame của video1, first frame của video2
-- merge_videos(): sử dụng safe_ffmpeg_command() và audio sync solution từ docs
-- Proper error handling với SafeErrorHandler
-```
-
-**Human Quick Test (10 phút):**
+**🧪 Quick Test Commands:**
 ```bash
-python backend/app.py  # Start server
-curl http://localhost:5000/api/status  # Test API
-# Nếu lỗi → docs/troubleshooting.md#network--api-issues
+# Test Rate Limiting (Step 2.2)
+python tests/test_rate_limiting.py
+
+# Test CORS (Step 2.3)
+python tests/test_cors.py
+
+# Test backend
+python backend/app.py
+curl http://localhost:5000/api/status
 ```
 
 ---
 
 ## 🚀 BƯỚC 3: WAN2GP INTEGRATION (Human làm - 40 phút)
 
+**🤖 AI Notes:** Bước này cần Human làm vì:
+- Wan2GP setup phức tạp, cần GPU testing thực tế
+- Model download và CUDA configuration cần manual verification
+- Performance tuning dựa trên hardware thực tế
+
+**📋 AI sẽ làm sau khi Human setup xong:**
+- Update `backend/wan2gp_wrapper.py` với real integration  
+- Implement error handling và fallbacks
+- Tạo performance monitoring
+
 ### 3.1 Setup wan2GP Environment (Human - 15 phút)
 **📖 Human đọc TRỰC TIẾP:**
 ```
 docs/troubleshooting.md#wan2gp-cuda-errors (dòng 15-38)
 docs/troubleshooting.md#memory-overflow (dòng 47-59)
+https://github.com/deepbeepmeep/Wan2GP/blob/main/docs/INSTALLATION.md
 ```
 
 **Human Instructions:**
@@ -290,9 +284,23 @@ Update wan2gp_wrapper.py với actual wan2GP integration:
 
 ## 🚀 BƯỚC 4: FRONTEND (AI tự làm - 80 phút)
 
+**📖 AI cần đọc TRƯỚC KHI BẮT ĐẦU:**
+```
+docs/frontend/README.md - Frontend architecture overview
+docs/frontend/components/App.md - Main app component structure
+README.md#🔥-rtx-50xx-series - PyTorch installation per GPU
+docs/testing/step1-testing-guide.md#frontend-testing - UI testing approach
+```
+
 ### 4.1 Main App Component (AI - 20 phút)
+**📖 AI đọc TRỰC TIẾP:**
+```
+docs/frontend/components/App.md#layout-structure
+```
+
 **AI Prompt:**
 ```
+Đọc docs/frontend/components/App.md trước.
 Tạo src/App.js với 3-column layout:
 
 Layout:
@@ -413,14 +421,17 @@ docs/build-deployment.md#automated-testing-script (dòng 313-374)
 ## 📋 FINAL DELIVERABLES
 
 ### MVP Checklist
-- [ ] Upload 2 videos (với security validation)
-- [ ] Extract transition frames
-- [ ] Generate AI transition với wan2GP
-- [ ] Merge 3 video segments
-- [ ] Export final video
-- [ ] Modern React UI
-- [ ] Error handling và logging
-- [ ] Performance documentation
+- [x] ✅ Project setup với dependencies (Step 1)
+- [x] ✅ Upload 2 videos với security validation (Step 2)
+- [x] ✅ Rate limiting và CORS security (Step 2.2, 2.3)
+- [x] ✅ Test infrastructure và scripts (Step 2)
+- [ ] 🔄 Extract transition frames (Step 3)
+- [ ] 🔄 Generate AI transition với wan2GP (Step 3)
+- [ ] ⏳ Merge 3 video segments (Step 4)
+- [ ] ⏳ Export final video (Step 4)
+- [ ] ⏳ Modern React UI (Step 4)
+- [ ] ⏳ Error handling và logging (Step 5)
+- [ ] ⏳ Performance documentation (Step 5)
 
 ### Next Phase Features
 - Script-based video generation

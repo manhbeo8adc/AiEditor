@@ -10,11 +10,9 @@ pillow==11.0.0
 numpy==1.26.4
 ffmpeg-python==0.2.0
 
-# === AI/ML Framework (GPU Blackwell + CUDA 12.x compatible) ===
---index-url https://download.pytorch.org/whl/cu128
-torch==2.7.1+cu128
-torchvision==0.22.1+cu128
-torchaudio==2.7.1+cu128
+# === AI/ML Framework ===
+# REMOVED: PyTorch dependencies moved to manual installation
+# See README.md for GPU-specific installation instructions
 
 # === Data Processing ===
 librosa==0.10.2.post1
@@ -29,10 +27,11 @@ python-magic==0.4.27
 python-magic-bin==0.4.14
 pathlib2==2.3.7
 
-# === Optional: CPU-only fallback (uncomment if no GPU) ===
-# torch==2.7.1+cpu
-# torchvision==0.20.1+cpu
-# torchaudio==2.7.1+cpu
+# === PyTorch Installation ===
+# Manual installation required based on your GPU:
+# - For RTX 40xx series: See README.md section "RTX 40xx Installation"
+# - For RTX 50xx series: See README.md section "RTX 50xx Installation" 
+# - For CPU only: See README.md section "CPU Installation"
 
 # Development
 pytest==8.3.4

@@ -234,4 +234,162 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **FFmpeg**: For excellent video processing capabilities
 - **PyTorch**: For AI model inference framework
 - **OpenCV**: For computer vision operations
-- **React**: For modern frontend framework 
+- **React**: For modern frontend framework
+
+## ⚠️ Cài đặt PyTorch theo GPU
+
+**Quan trọng**: PyTorch cần được cài đặt riêng theo loại GPU của bạn. Không dùng `pip install -r requirements.txt` mà chưa cài PyTorch trước.
+
+### 🔥 RTX 50xx Series (Blackwell Architecture)
+
+Cho GPU RTX 5060 Ti, 5070, 5070 Ti, 5080, 5090:
+
+```bash
+# Kích hoạt environment
+conda activate ai_video_env
+
+# Cài PyTorch với CUDA 12.8 (Blackwell compatible)
+pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
+
+# Hoặc dùng version stable (nếu có)
+pip install torch==2.7.1+cu128 torchvision==0.22.1+cu128 torchaudio==2.7.1+cu128 --index-url https://download.pytorch.org/whl/cu128
+```
+
+**Lưu ý RTX 50xx:**
+- Blackwell GPUs yêu cầu CUDA 12.8+
+- Một số features có thể cần nightly builds
+- Tham khảo: [Nvidia Blackwell Installation Guide](https://github.com/deepbeepmeep/Wan2GP/blob/main/docs/INSTALLATION.md)
+
+### ⚡ RTX 40xx Series (Ada Lovelace) 
+
+Cho GPU RTX 4060, 4060 Ti, 4070, 4070 Ti, 4080, 4090:
+
+```bash
+# Kích hoạt environment
+conda activate ai_video_env
+
+# Cài PyTorch với CUDA 12.4 (tương thích tốt với RTX 40xx)
+pip install torch==2.4.1+cu124 torchvision==0.19.1+cu124 torchaudio==2.4.1+cu124 --index-url https://download.pytorch.org/whl/cu124
+
+# Hoặc CUDA 12.1 (ổn định hơn)
+pip install torch==2.4.1+cu121 torchvision==0.19.1+cu121 torchaudio==2.4.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+```
+
+### 🖥️ CPU Only (Không có GPU)
+
+```bash
+# Kích hoạt environment
+conda activate ai_video_env
+
+# Cài PyTorch CPU-only
+pip install torch==2.4.1+cpu torchvision==0.19.1+cpu torchaudio==2.4.1+cpu --index-url https://download.pytorch.org/whl/cpu
+```
+
+### 📦 Cài đặt các dependencies khác
+
+Sau khi cài PyTorch, cài các dependencies còn lại:
+
+```bash
+# Cài các dependencies khác
+pip install -r requirements.txt
+```
+
+## 🚀 Hướng dẫn cài đặt đầy đủ
+
+### Bước 1: Tạo Conda Environment
+```bash
+# Tạo environment mới
+conda create -n ai_video_env python=3.10
+
+# Kích hoạt environment
+conda activate ai_video_env
+```
+
+### Bước 2: Cài đặt PyTorch (theo GPU)
+**Chọn 1 trong 3 cách ở phần trên**
+
+### Bước 3: Cài đặt dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Bước 4: Tạo thư mục
+```bash
+mkdir temp uploads output
+```
+
+### Bước 5: Kiểm tra cài đặt
+```bash
+# Test PyTorch
+python test_pytorch.py
+
+# Test backend
+python backend/app.py
+```
+
+## 🧪 Testing
+
+### Test Security Features (Step 2)
+```bash
+# Test Rate Limiting (Step 2.2)
+python tests/test_rate_limiting.py
+
+# Test CORS (Step 2.3) 
+python tests/test_cors.py
+```
+
+### Test Video Processing
+```bash
+python test_video_processor.py
+python test_wan2gp_wrapper.py
+```
+
+## 📁 Cấu trúc thư mục
+
+```
+AiEditor/
+├── backend/           # Flask backend
+├── frontend/          # React frontend  
+├── tests/            # Test scripts
+├── docs/             # Documentation
+├── temp/             # Temporary files
+├── uploads/          # Uploaded videos
+├── output/           # Processed outputs
+├── requirements.txt  # Dependencies (without PyTorch)
+└── README.md         # This file
+```
+
+## 🔧 Troubleshooting
+
+### GPU không được nhận diện
+1. Kiểm tra NVIDIA driver: `nvidia-smi`
+2. Kiểm tra CUDA: `nvcc --version`
+3. Test PyTorch GPU: `python -c "import torch; print(torch.cuda.is_available())"`
+
+### RTX 50xx issues
+- Dùng nightly builds nếu stable không hoạt động
+- Một số features có thể cần CPU fallback
+- Tham khảo [Blackwell Compatibility Guide](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/)
+
+### Dependencies conflicts
+- Xóa environment và tạo lại: `conda env remove -n ai_video_env`
+- Cài đúng thứ tự: PyTorch trước, requirements.txt sau
+
+## 📋 Yêu cầu hệ thống
+
+- **OS**: Windows 10/11, Linux, macOS
+- **Python**: 3.10+
+- **CUDA**: 12.1+ (cho GPU)
+- **Memory**: 16GB RAM (khuyến nghị)
+- **Storage**: 5GB free space
+
+## 🤝 Đóng góp
+
+1. Fork repo
+2. Tạo feature branch
+3. Commit changes
+4. Push và tạo Pull Request
+
+## 📄 License
+
+MIT License - xem LICENSE file để biết thêm chi tiết. 

@@ -26,6 +26,10 @@ Successfully installed flask-limiter-3.5.0 python-magic-0.4.27 ...
 
 ### ✅ 2. Kiểm thử Backend Security Features
 
+**📂 Test Scripts Location**: Tất cả scripts test nằm trong folder `tests/`
+- `tests/test_rate_limiting.py` - Test rate limiting (Step 2.2)
+- `tests/test_cors.py` - Test CORS configuration (Step 2.3)
+
 #### 2.1 Test Flask App với Security
 ```bash
 # Khởi động backend server
@@ -45,6 +49,35 @@ python backend/app.py
 #### 2.2 Test Rate Limiting
 **Mở terminal mới (giữ server chạy):**
 
+**Cách 1: Sử dụng Test Script (Khuyên dùng)**
+```bash
+# Chạy script test rate limiting tự động
+python tests/test_rate_limiting.py
+```
+
+**Kết quả mong đợi:**
+```
+🔥 Testing Rate Limiting (Step 2.2)
+==================================================
+1. Testing normal status endpoint...
+✅ Status: 200
+Response: {'message': 'AI Video Editor Backend is running', 'status': 'running', 'version': '1.0.0'}
+
+2. Testing rate limiting (sending 6 requests quickly)...
+Request 1: Status 400
+Expected 400 (missing files)
+Request 2: Status 400
+Expected 400 (missing files)
+...
+Request 6: Status 429
+✅ Rate limiting triggered at request 6
+Error response: {'error': 'An error occurred', 'code': 429}
+
+✅ Rate limiting test completed!
+Expected: Requests should be limited after 5 attempts
+```
+
+**Cách 2: Test thủ công với curl**
 ```bash
 # Test status endpoint (should work)
 curl http://localhost:5000/api/status
@@ -56,15 +89,40 @@ for i in {1..6}; do
 done
 ```
 
-**Expected Response (Rate limiting after 5 requests):**
-```json
-{
-  "error": "An error occurred",
-  "code": 429
-}
+#### 2.3 Test CORS Configuration
+
+**Cách 1: Sử dụng Test Script (Khuyên dùng)**
+```bash
+# Chạy script test CORS tự động
+python tests/test_cors.py
 ```
 
-#### 2.3 Test CORS Configuration
+**Kết quả mong đợi:**
+```
+🌐 Testing CORS Configuration (Step 2.3)
+==================================================
+1. Testing CORS with ALLOWED origin (localhost:3000)...
+Status: 200
+Access-Control-Allow-Origin: http://localhost:3000
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+✅ CORS allowed for localhost:3000
+
+2. Testing CORS with DISALLOWED origin (malicious-site.com)...
+Status: 200
+Access-Control-Allow-Origin: None
+  No CORS headers found (good - origin blocked)
+✅ CORS correctly blocked malicious origin
+
+3. Testing POST request with CORS...
+Status: 400
+CORS Headers in POST response:
+  access-control-allow-origin: http://localhost:3000
+
+✅ CORS test completed!
+Expected: localhost:3000 should be allowed, malicious sites should be blocked
+```
+
+**Cách 2: Test thủ công với curl**
 ```bash
 # Test CORS với allowed origin
 curl -H "Origin: http://localhost:3000" \
@@ -489,17 +547,33 @@ AiEditor/
 │   ├── app.py ✓ (Updated với security)
 │   ├── video_processor.py ✓ (Updated với safe processing)
 │   └── wan2gp_wrapper.py ✓
+├── tests/ ✓ (Test scripts folder)
+│   ├── test_rate_limiting.py ✓ (Step 2.2)
+│   └── test_cors.py ✓ (Step 2.3)
 ├── uploads/ ✓ (Contains test videos)
 ├── temp/ ✓ (Contains transition frames)
 ├── output/ ✓ (Contains merged videos)
 ├── test_videos/ ✓ (Test input videos)
-├── requirements.txt ✓ (Updated với new deps)
+├── requirements.txt ✓ (Updated, PyTorch removed)
 ├── test_video_processor_step2.py ✓
 ├── test_complete_workflow.py ✓
 └── final_merged_video.mp4 ✓
 ```
 
 ## Quick Test Sequence
+
+### Test riêng từng bước (Step 2.2 & 2.3):
+```bash
+# 1. Khởi động server (Terminal 1)
+conda activate ai_video_env
+python backend/app.py
+
+# 2. Test Rate Limiting (Terminal 2)
+python tests/test_rate_limiting.py
+
+# 3. Test CORS
+python tests/test_cors.py
+```
 
 ### Chạy tất cả tests nhanh:
 ```bash
@@ -517,11 +591,15 @@ python backend/app.py &
 # 4. Wait for startup
 sleep 3
 
-# 5. Run complete workflow test
-python test_complete_workflow.py
+# 5. Run security tests
+python tests/test_rate_limiting.py
+python tests/test_cors.py
 
-# 6. Check output
-ls -la final_merged_video.mp4
+# 6. Run complete workflow test (if available)
+# python test_complete_workflow.py
+
+# 7. Check output
+ls -la test_videos/ uploads/ temp/ output/
 ```
 
 ### Expected Timeline:
