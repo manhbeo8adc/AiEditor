@@ -4,117 +4,42 @@
 Hướng dẫn kiểm thử các tính năng video processing đã implement trong bước 2, bao gồm secure API endpoints, file upload security, và video processing functions.
 
 ## Yêu cầu trước khi bắt đầu
-- **BƯỚC 1 đã hoàn thành thành công** ✅
-- **Conda environment `ai_video_env` đã được kích hoạt** ✅  
-- **Tất cả dependencies đã được cài đặt từ requirements.txt** ✅
-- **Backend và VideoProcessor đã pass tất cả tests từ step 1** ✅
+- BƯỚC 1 đã hoàn thành thành công
+- Conda environment `ai_video_env` đã được kích hoạt
+- Dependencies mới đã được cài đặt
 
 ## Danh sách kiểm thử
 
-### ✅ 1. Xác minh Dependencies từ Bước 1
+### ✅ 1. Cài đặt Dependencies mới
 ```bash
-# Kích hoạt environment (nếu chưa)
+# Kích hoạt environment
 conda activate ai_video_env
 
-# Verify dependencies đã cài từ bước 1
-python -c "
-import flask, flask_cors, flask_limiter
-import cv2, torch, numpy
-try:
-    import magic
-    print('✅ All Step 2 dependencies ready from Step 1')
-except ImportError:
-    print('⚠️ python-magic fallback mode (this is OK)')
-"
+# Cài đặt dependencies mới
+pip install flask-limiter python-magic python-magic-bin pytest-flask imageio imageio-ffmpeg ffmpeg-python pathlib2
 ```
 
 **Kết quả mong đợi:**
 ```
-✅ All Step 2 dependencies ready from Step 1
+Successfully installed flask-limiter-3.5.0 python-magic-0.4.27 ...
 ```
-
-**Lưu ý GPU Blackwell (RTX 50xx series):**
-- PyTorch sẽ fallback to CPU (đã expect từ bước 1) ✅
-- FFmpeg vẫn sử dụng GPU acceleration ✅
-- Video processing vẫn hoạt động bình thường ✅
 
 ### ✅ 2. Kiểm thử Backend Security Features
 
-#### 2.1 Test Flask App với Security (Conda Environment)
+#### 2.1 Test Flask App với Security
 ```bash
-# Khởi động backend server với conda environment
-conda activate ai_video_env
+# Khởi động backend server
 python backend/app.py
 ```
 
 **Kết quả mong đợi:**
 ```
-✅ python-magic loaded successfully
 🚀 GPU acceleration enabled: NVIDIA GeForce RTX 5060 Ti
-   CUDA version: 12.8
+   CUDA version: 12.4
    PyTorch version: 2.7.1+cu128
 ⚠️  Using CPU processing  # (for Blackwell compatibility)
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
-```
-
-**Lưu ý GPU Blackwell:**
-- Warning về rate limiting và CUDA compatibility là expected ✅
-- Backend sẽ fallback to CPU cho PyTorch (FFmpeg vẫn dùng GPU) ✅
-- Tất cả tính năng video processing vẫn hoạt động bình thường ✅
-
-#### 2.1.1 Quick Backend Test (Thay thế manual testing)
-**Mở terminal mới (giữ server chạy):**
-
-```bash
-# Kích hoạt conda environment
-conda activate ai_video_env
-
-# Chạy test script tự động
-python test_step2_quick.py
-```
-
-**Kết quả mong đợi:**
-```
-🧪 Testing Step 2 - Video Processing Backend...
-==================================================
-1. Testing dependencies from requirements.txt...
-✅ Flask: 3.1.0
-✅ OpenCV: 4.10.0.84
-✅ PyTorch: 2.7.1+cu128
-✅ python-magic: working
-
-2. Testing VideoProcessor...
-✅ VideoProcessor initialized
-🚀 GPU: NVIDIA GeForce RTX 5060 Ti
-⚠️ Blackwell GPU detected - PyTorch CPU fallback expected
-✅ Method 'extract_transition_frames': ✓
-✅ Method 'merge_videos_with_transition': ✓
-✅ Method 'safe_ffmpeg_command': ✓
-✅ Method 'execute_safe_command': ✓
-
-3. Testing Flask App Security...
-✅ Endpoint /api/status: ✓
-✅ Endpoint /api/upload: ✓
-✅ Endpoint /api/extract-frames: ✓
-✅ Endpoint /api/generate-transition: ✓
-✅ Endpoint /api/merge-videos: ✓
-
-4. Testing Security Functions...
-✅ Security function 'validate_video_file': ✓
-✅ Security function 'secure_file_path': ✓
-✅ Security function 'sanitize_user_input': ✓
-
-5. Testing Directory Structure...
-✅ Directory 'uploads': ✓
-✅ Directory 'temp': ✓
-✅ Directory 'output': ✓
-
-==================================================
-🎉 Step 2 Backend Test PASSED!
-✅ All video processing components ready
-✅ Security features implemented
-✅ GPU Blackwell compatibility confirmed
 ```
 
 #### 2.2 Test Rate Limiting
