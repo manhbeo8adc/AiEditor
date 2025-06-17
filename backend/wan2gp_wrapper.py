@@ -64,6 +64,65 @@ class Wan2GPWrapper:
             print(f"Transition generation failed: {e}")
             return None
     
+    def process_video(self, input_path: str, output_path: str, options: dict = None) -> bool:
+        """
+        Process video using wan2GP
+        
+        Args:
+            input_path: Path to input video
+            output_path: Path to output video
+            options: Processing options dict
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            if not self.env_activated:
+                if not self.activate_environment():
+                    return False
+            
+            print(f"🤖 Processing video with wan2GP: {input_path} -> {output_path}")
+            
+            # TODO: Implement actual wan2GP video processing
+            # This would involve:
+            # 1. Extract frames from input video
+            # 2. Generate transitions between frames
+            # 3. Merge processed frames back to video
+            
+            print("⚠️  wan2GP video processing not yet implemented")
+            return False
+            
+        except Exception as e:
+            print(f"❌ wan2GP video processing failed: {e}")
+            return False
+    
+    def get_model_info(self) -> dict:
+        """
+        Get wan2GP model information
+        
+        Returns:
+            Dict with model information
+        """
+        try:
+            model_info = {
+                "name": "wan2GP",
+                "version": "1.0.0",
+                "description": "Video transition generation model",
+                "status": "installed" if self.check_installation() else "not_installed",
+                "gpu_support": True,
+                "supported_formats": ["mp4", "avi", "mov"],
+                "max_resolution": "1920x1080"
+            }
+            
+            return model_info
+            
+        except Exception as e:
+            print(f"❌ Failed to get model info: {e}")
+            return {
+                "name": "wan2GP",
+                "status": "error",
+                "error": str(e)
+            }
+    
     def test_generation(self) -> bool:
         """Test wan2GP with sample frames"""
         try:

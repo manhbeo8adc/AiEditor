@@ -1,37 +1,37 @@
-# VideoProcessor Class Documentation
+# Tài liệu Class VideoProcessor
 
-## Overview
-Class `VideoProcessor` trong file `backend/video_processor.py` chịu trách nhiệm xử lý video, extract frames và merge videos.
+## Tổng quan
+Class `VideoProcessor` trong file `backend/video_processor.py` chịu trách nhiệm xử lý video, trích xuất khung hình và ghép video.
 
-## Class Definition
+## Định nghĩa Class
 ```python
 class VideoProcessor:
     def __init__(self):
         """Initialize VideoProcessor"""
 ```
 
-## Attributes (Thuộc tính)
+## Thuộc tính
 
 ### `self.temp_dir`
-- **Type:** `str`
-- **Purpose:** Đường dẫn đến thư mục temporary để lưu files tạm thời
-- **Created by:** `tempfile.mkdtemp()`
-- **Usage:** Lưu frames extracted và files trung gian
+- **Kiểu dữ liệu:** `str`
+- **Mục đích:** Đường dẫn đến thư mục tạm thời để lưu các file tạm
+- **Được tạo bởi:** `tempfile.mkdtemp()`
+- **Sử dụng:** Lưu các khung hình đã trích xuất và file trung gian
 
-## Methods (Phương thức)
+## Phương thức
 
 ### `__init__(self)`
-**Purpose:** Khởi tạo VideoProcessor instance
+**Mục đích:** Khởi tạo đối tượng VideoProcessor
 
-**Parameters:** Không có
+**Tham số:** Không có
 
-**Returns:** Không có
+**Trả về:** Không có
 
-**Functionality:**
-- Tạo temporary directory cho việc xử lý
-- Initialize các settings cần thiết
+**Chức năng:**
+- Tạo thư mục tạm thời cho việc xử lý
+- Khởi tạo các cài đặt cần thiết
 
-**Example:**
+**Ví dụ:**
 ```python
 processor = VideoProcessor()
 ```
@@ -39,25 +39,25 @@ processor = VideoProcessor()
 ---
 
 ### `extract_frames(self, video1_path: str, video2_path: str) -> Tuple[Optional[str], Optional[str]]`
-**Purpose:** Extract frame cuối từ video1 và frame đầu từ video2 để tạo transition
+**Mục đích:** Trích xuất khung hình cuối từ video1 và khung hình đầu từ video2 để tạo chuyển cảnh
 
-**Parameters:**
+**Tham số:**
 - `video1_path` (str): Đường dẫn đến video thứ nhất
 - `video2_path` (str): Đường dẫn đến video thứ hai
 
-**Returns:**
-- `Tuple[Optional[str], Optional[str]]`: (last_frame_path, first_frame_path)
+**Trả về:**
+- `Tuple[Optional[str], Optional[str]]`: (đường_dẫn_khung_cuối, đường_dẫn_khung_đầu)
 - Trả về `(None, None)` nếu có lỗi
 
-**Functionality:**
-- Extract frame cuối cùng từ video1
-- Extract frame đầu tiên từ video2
-- Save frames dưới dạng image files
-- Return paths đến 2 frames
+**Chức năng:**
+- Trích xuất khung hình cuối cùng từ video1
+- Trích xuất khung hình đầu tiên từ video2
+- Lưu các khung hình dưới dạng file ảnh
+- Trả về đường dẫn đến 2 khung hình
 
-**Current Status:** TODO - chưa implement
+**Trạng thái hiện tại:** TODO - chưa triển khai
 
-**Example:**
+**Ví dụ:**
 ```python
 last_frame, first_frame = processor.extract_frames("video1.mp4", "video2.mp4")
 ```

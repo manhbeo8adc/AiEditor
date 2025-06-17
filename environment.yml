@@ -1,0 +1,38 @@
+name: ai_video_env
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  # === Python Base ===
+  - python=3.10
+  
+  # === System Tools (conda priority) ===
+  - ffmpeg                        # Video processing backend
+  - git                          # Version control
+  
+  # === AI/ML Framework (conda priority) ===
+  - pytorch=2.5.1                # PyTorch with CUDA 12.4 support (Blackwell compatible)
+  - torchvision=0.20.1           # Computer vision models
+  - torchaudio=2.5.1             # Audio processing
+  - pytorch-cuda=12.4            # CUDA 12.4 toolkit for GPU acceleration
+  
+  # === Data Science (conda priority) ===
+  - numpy=2.0.1                  # Numerical computing
+  - pillow=11.1.0                # Image processing
+  - pyyaml=6.0.2                 # Configuration parsing
+  
+  # === System Monitoring ===
+  - psutil=6.1.0                 # System resource monitoring
+  
+  # === Web Framework (pip only) ===
+  - pip
+  - pip:
+    - flask==2.3.3              # Web API framework
+    - flask-cors==4.0.0          # CORS support
+    - opencv-python==4.10.0.84   # Computer vision (pip version more stable)
+    - ffmpeg-python==0.2.0       # Python FFmpeg wrapper
+    - python-multipart==0.0.12   # File upload handling
+    - werkzeug==2.3.7            # WSGI utilities 

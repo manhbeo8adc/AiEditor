@@ -1,0 +1,25 @@
+# === CPU-Only Deployment Requirements ===
+# Dùng file này cho máy không có GPU hoặc CUDA không tương thích
+
+# === Core Web Framework ===
+flask==2.3.3                    # Web API framework
+flask-cors==4.0.0               # Cross-origin resource sharing
+
+# === Computer Vision & Video Processing ===
+opencv-python==4.10.0.84        # Video/image processing, frame extraction
+ffmpeg-python==0.2.0            # Video encoding/decoding wrapper
+
+# === AI/ML Framework (CPU-only versions) ===
+torch==2.7.1+cpu                # PyTorch CPU-only version
+torchvision==0.20.1+cpu         # Computer vision models CPU-only
+torchaudio==2.7.1+cpu           # Audio processing CPU-only
+
+# === Data Processing ===
+numpy==1.26.4                   # Numerical computing foundation
+pillow==10.4.0                  # Image processing and manipulation
+
+# === System & Utilities ===
+psutil==6.1.0                   # System monitoring and process management
+pyyaml==6.0.2                   # Configuration file parsing
+python-multipart==0.0.12        # File upload handling
+werkzeug==2.3.7                 # WSGI utilities for Flask 
